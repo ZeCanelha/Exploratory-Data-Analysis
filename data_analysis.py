@@ -15,5 +15,16 @@ try:
 except IOError as e:
 	print(e)
 
-print(dataset)
+
+# Get number of canceled jobs - 5 - and finished jobs - 1 - 
+
+status = dataset['Status']
+plt.hist(status, bins = 'auto', align = 'mid', label = 'Status of the jobs')
+plt.show()
+
+
+
+
+
+
 
