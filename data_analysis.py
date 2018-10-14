@@ -16,6 +16,9 @@ import time, os
 # EndTime:   Sat Apr 29 21:08:32 PDT 2000
 
 UnixStartTime = 893466664
+os.environ['TZ'] = 'US/Pacific'
+time.tzset()
+
 
 path1 = "/Users/zecanelha/Desktop/1o Semestre/MEI/Datasets/SDSC-SP2.txt"
 
@@ -31,11 +34,9 @@ try:
 except IOError as e:
 	print(e)
 
-os.environ['TZ'] = 'US/Pacific'
-time.tzset()
+
 # print(time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(UnixStartTime)))
 # logStartTime = dataset.loc[dataset.index[0],'Submit Time']
-
 
 
 # Get number of canceled jobs - 5 - and finished jobs - 1 -
@@ -63,10 +64,34 @@ plt.plot(jobsPerUser)
 plt.xlabel('UserID')
 plt.ylabel('Number of jobs')
 plt.legend()
+plt.grid()
 plt.show()
 
 # Get number of jobs per weak
 
-
-
 # Get Number of complete jobs per weak
+
+# Number of processors per jobs
+
+plt.plot(dataset['Job Number'],dataset['Number of Allocated Processors'],label = "Number of allocated processors per job")
+plt.xlabel('Jobs')
+plt.ylabel('Allocated processors')
+plt.legend()
+plt.grid()
+plt.show()
+
+# Comparisation between requested processors and number of processors allocated
+
+plt.subplot(2,1,1)
+plt.plot(dataset['Requested Number of Processors'], label = 'Requested Number of processors')
+plt.xlabel("Jobs")
+plt.ylabel("Requested processors")
+plt.grid()
+
+plt.subplot(2,1,2)
+plt.plot(dataset['Number of Allocated Processors'], label = 'Number of Allocated Processors')
+plt.xlabel("Jobs")
+plt.ylabel("Allocated proccessors")
+plt.grid()
+
+plt.show()
