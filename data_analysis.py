@@ -20,10 +20,34 @@ except IOError as e:
 
 status = dataset['Status']
 plt.hist(status, bins = 'auto', align = 'mid', label = 'Status of the jobs')
+plt.xlabel('Status')
+plt.ylabel('Number of jobs')
+plt.legend()
 plt.show()
 
 
+# Get number of jobs per user 
 
+#Get unique users -> set unordered colection of distinct objects
+
+users = set(dataset['UserID'])
+jobsPerUser = []
+
+for i in users:
+	df = dataset.loc[dataset['UserID'] == i]
+	jobsPerUser.append(len(df.index))
+
+plt.plot(jobsPerUser)
+plt.xlabel('UserID')
+plt.ylabel('Number of jobs')
+plt.legend()
+plt.show()
+
+# Get number of jobs per weak
+
+
+
+# Get Number of complete jobs per weak
 
 
 
