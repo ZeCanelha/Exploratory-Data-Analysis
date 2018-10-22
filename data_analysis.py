@@ -19,10 +19,10 @@ UnixStartTime = 893466664
 os.environ['TZ'] = 'US/Pacific'
 time.tzset()
 
+path1 = "SDSCSP2.txt"
+#path1 = "/Users/zecanelha/Desktop/1o Semestre/MEI/Datasets/SDSC-SP2.txt"
 
-path1 = "/Users/zecanelha/Desktop/1o Semestre/MEI/Datasets/SDSC-SP2.txt"
-
-path2 = "MEI/Datasets/HPC2N.txt"
+#path2 = "MEI/Datasets/HPC2N.txt"
 
 columns = ["Job Number", "Submit Time","Wait Time","Run Time","Number of Allocated Processors","Average CPU Time Used","Used Memory", \
 			"Requested Number of Processors","Requested Time","Requested Memory","Status","UserID","Group ID","Executable Number", \
@@ -35,12 +35,44 @@ except IOError as e:
 	print(e)
 
 
-# print(time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(UnixStartTime)))
-# logStartTime = dataset.loc[dataset.index[0],'Submit Time']
+
+#days= ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+finish_time = dataset["Submit Time"] + dataset["Wait Time"] + dataset["Run Time"]
+logStartTime = dataset.loc[dataset.index[0],'Submit Time']#->primeira data
+
+#print(aux[1])#->criar vetor com 2 colunas
+date1 = time.strftime('%Y-%m-%d',time.localtime(UnixStartTime + logStartTime))
+datef = datetime.strptime(date1, '%Y-%m-%d')#->converter em datetime desde str
+weeknumber = datef.isocalendar()[1]#buscar numero da semana
+#print(date1)#->so primeira data
+#print(UnixStartTime)
+#print(logStartTime)
+
+#------------------------------------------------------------------------------------------------
+#print(finish_time)
+aux = UnixStartTime+finish_time
+lista = []
+lista_semanas = []
+for i in aux:
+	lista.append(i)
+
+for i in lista:
+	lista_semanas.append(time.strftime('%Y-%m-%d',time.localtime(i)))
+	#finish_week = time.strftime('%Y-%m-%d',time.localtime(lista[5000]))
+
+'''
+print(time.strftime('%Y-%m-%d',time.localtime(UnixStartTime + logStartTime)))
+print(datef)
+print(datef.isocalendar()[1])
+#print(logStartTime)
+'''
+print(lista_semanas)
+#print(finish_week)
+
 
 
 # Get number of canceled jobs - 5 - and finished jobs - 1 -
-
+'''
 status = dataset['Status']
 plt.hist(status, bins = 'auto', align = 'mid', label = 'Status of the jobs')
 plt.xlabel('Status')
@@ -95,3 +127,4 @@ plt.ylabel("Allocated proccessors")
 plt.grid()
 
 plt.show()
+'''
