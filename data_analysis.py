@@ -138,6 +138,39 @@ plt.legend()
 plt.show()
 
 
+#get percentage of success per week Jobs Completed / Total jobs per week
+'''
+print(len(datasetJobCompleted))
+print(len(datasetJobCompleted[datasetJobCompleted['Finish Week']==67]))
+print(len(datasetJobCompleted))
+print(len(dataset))
+'''
+
+vector_percentageSuc = [] 
+for i in range(1,54):
+	jobTotais = len(dataset[dataset['Finish Week']==i])
+	#print(jobTotais)
+	jobSucTotais = len(datasetJobCompleted[datasetJobCompleted['Finish Week']==i])
+	#print(jobSucTotais)
+	perc = (float(jobSucTotais) / float(jobTotais))
+	#print(round(perc,2)*100)
+	vector_percentageSuc.append(round(perc,3)*100)
+print(vector_percentageSuc)
+
+
+
+
+#plt.hist(vector_percentageSuc, bins=53, align = 'mid',color = 'coral', rwidth=0.85, label = 'Percentage of Jobs Completed Per Week' )
+#plt.plot(1, vector_percentageSuc[1], label="Percentage of Jobs Completed Per Week")
+plt.bar(range(53), vector_percentageSuc,color = 'coral')
+plt.xlabel('Weeks')
+plt.ylabel('Percentage of Jobs Completed')
+plt.title('Percentage of Successful Jobs Per Week')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+
 
 # Number of processors per jobs
 
@@ -149,3 +182,5 @@ plt.grid()
 plt.show()
 
 # Comparisation between requested processors and number of processors allocated
+
+# Processadores Alocados Por Segundo por Job
