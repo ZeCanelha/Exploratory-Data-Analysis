@@ -19,8 +19,8 @@ UnixStartTime = 893466664
 os.environ['TZ'] = 'US/Pacific'
 time.tzset()
 
-path1 = "SDSCSP2.txt"
-#path1 = "/Users/zecanelha/Desktop/1o Semestre/MEI/Datasets/SDSC-SP2.txt"
+#path1 = "SDSCSP2.txt"
+path1 = "/Users/zecanelha/Desktop/1o Semestre/MEI/Datasets/SDSC-SP2.txt"
 
 #path2 = "MEI/Datasets/HPC2N.txt"
 
@@ -40,17 +40,20 @@ except IOError as e:
 finish_time = dataset["Submit Time"] + dataset["Wait Time"] + dataset["Run Time"]
 logStartTime = dataset.loc[dataset.index[0],'Submit Time']#->primeira data
 
-#print(aux[1])#->criar vetor com 2 colunas
+
+
 date1 = time.strftime('%Y-%m-%d',time.localtime(UnixStartTime + logStartTime))
-datef = datetime.strptime(date1, '%Y-%m-%d')#->converter em datetime desde str
-weeknumber = datef.isocalendar()[1]#buscar numero da semana
-#print(date1)#->so primeira data
-#print(UnixStartTime)
-#print(logStartTime)
-#print(weeknumber)
+
+#Converter em datetime desde str
+datef = datetime.strptime(date1, '%Y-%m-%d')
+#Obter numero da semana
+weeknumber = datef.isocalendar()[1]
+
+
+
 #------------------------------------------------------------------------------------------------
-#print(finish_time)
-aux = UnixStartTime+finish_time
+
+aux = UnixStartTime + finish_time
 lista = []
 lista_semanas = []
 for i in aux:
@@ -72,17 +75,6 @@ dataset.insert(18, 'Finish Week', lista_semanas)
 
 
 
-
-'''
-print(time.strftime('%Y-%m-%d',time.localtime(UnixStartTime + logStartTime)))
-print(datef)
-print(datef.isocalendar()[1])
-#print(logStartTime)
-'''
-
-
-'''
-
 # Get number of canceled jobs - 5 - and finished jobs - 1 -
 
 status = dataset['Status']
@@ -93,9 +85,10 @@ plt.legend()
 plt.show()
 
 
+'''
 # Get number of jobs per user
 
-#Get unique users -> set unordered colection of distinct objects
+# Get unique users -> set unordered colection of distinct objects
 
 users = set(dataset['UserID'])
 jobsPerUser = []
@@ -111,11 +104,14 @@ plt.legend()
 plt.grid()
 plt.show()
 '''
+
+
 # Get number of jobs per weeks
 wks = dataset['Finish Week']
-plt.hist(wks, bins = 53, align = 'mid',color = 'coral', rwidth=0.85, label = 'Weeks of the jobs')
+plt.hist(wks, bins = 53, align = 'mid',color = 'coral', rwidth=0.85, label = 'Number of jobs per week')
 plt.xlabel('Weeks')
 plt.ylabel('Number of jobs')
+plt.title('Number of jobs per week')
 plt.legend()
 plt.show()
 
@@ -127,10 +123,22 @@ wksCompleted = datasetJobCompleted['Finish Week']
 plt.hist(wksCompleted, bins = 53, align = 'mid',color = 'coral', rwidth=0.85, label = 'Weeks of the jobs completed')
 plt.xlabel('Weeks')
 plt.ylabel('Number of jobs completed')
+plt.title("Number of completed jobs per week")
 plt.legend()
 plt.show()
 
-'''
+#Get the number of canceled jobs per week
+datasetCanceledJob = dataset.copy()
+datasetCanceledJob = datasetCanceledJob[datasetCanceledJob['Status'] != 1]
+plt.hist(wksCompleted, bins = 53, align = 'mid',color = 'coral', rwidth=0.85, label = 'Weeks of the jobs completed')
+plt.xlabel('Weeks')
+plt.ylabel('Number of jobs completed')
+plt.title("Number of canceled jobs per week")
+plt.legend()
+plt.show()
+
+
+
 # Number of processors per jobs
 
 plt.plot(dataset['Job Number'],dataset['Number of Allocated Processors'],label = "Number of allocated processors per job")
@@ -141,18 +149,3 @@ plt.grid()
 plt.show()
 
 # Comparisation between requested processors and number of processors allocated
-
-plt.subplot(2,1,1)
-plt.plot(dataset['Requested Number of Processors'], label = 'Requested Number of processors')
-plt.xlabel("Jobs")
-plt.ylabel("Requested processors")
-plt.grid()
-
-plt.subplot(2,1,2)
-plt.plot(dataset['Number of Allocated Processors'], label = 'Number of Allocated Processors')
-plt.xlabel("Jobs")
-plt.ylabel("Allocated proccessors")
-plt.grid()
-
-plt.show()
-'''
