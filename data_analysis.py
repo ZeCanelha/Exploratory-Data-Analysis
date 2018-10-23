@@ -141,10 +141,9 @@ plt.show()
 
 
 # Number of processors per jobs
-
-plt.plot(dataset['Job Number'],dataset['Number of Allocated Processors'],label = "Number of allocated processors per job")
-plt.xlabel('Jobs')
-plt.ylabel('Allocated processors')
+plt.hist(dataset['Number of Allocated Processors'],bins = 128,label = "Number of allocated processors per job")
+plt.ylabel('Jobs')
+plt.xlabel('Allocated processors')
 plt.legend()
 plt.grid()
 plt.show()
