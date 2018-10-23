@@ -47,7 +47,7 @@ weeknumber = datef.isocalendar()[1]#buscar numero da semana
 #print(date1)#->so primeira data
 #print(UnixStartTime)
 #print(logStartTime)
-
+#print(weeknumber)
 #------------------------------------------------------------------------------------------------
 #print(finish_time)
 aux = UnixStartTime+finish_time
@@ -57,8 +57,21 @@ for i in aux:
 	lista.append(i)
 
 for i in lista:
-	lista_semanas.append(time.strftime('%Y-%m-%d',time.localtime(i)))
-	#finish_week = time.strftime('%Y-%m-%d',time.localtime(lista[5000]))
+	var = time.strftime('%Y-%m-%d',time.localtime(i))
+	var2 = datetime.strptime(var, '%Y-%m-%d')
+	lista_semanas.append(var2.isocalendar()[1])
+	'''
+	if (var2.isocalendar()[1] == 1):
+		cont+=1
+	'''
+	#dataset.loc[j,'Finish Week'] = j
+
+#print(lista_semanas)
+dataset.insert(18, 'Finish Week', lista_semanas)
+#print(dataset)
+
+
+
 
 '''
 print(time.strftime('%Y-%m-%d',time.localtime(UnixStartTime + logStartTime)))
@@ -66,15 +79,14 @@ print(datef)
 print(datef.isocalendar()[1])
 #print(logStartTime)
 '''
-print(lista_semanas)
-#print(finish_week)
 
 
+'''
 
 # Get number of canceled jobs - 5 - and finished jobs - 1 -
-'''
+
 status = dataset['Status']
-plt.hist(status, bins = 'auto', align = 'mid', label = 'Status of the jobs')
+plt.hist(status, bins = 'auto', align = 'mid',color = 'orange', rwidth=0.85, label = 'Status of the jobs')
 plt.xlabel('Status')
 plt.ylabel('Number of jobs')
 plt.legend()
@@ -98,11 +110,27 @@ plt.ylabel('Number of jobs')
 plt.legend()
 plt.grid()
 plt.show()
+'''
+# Get number of jobs per weeks
+wks = dataset['Finish Week']
+plt.hist(wks, bins = 53, align = 'mid',color = 'coral', rwidth=0.85, label = 'Weeks of the jobs')
+plt.xlabel('Weeks')
+plt.ylabel('Number of jobs')
+plt.legend()
+plt.show()
 
-# Get number of jobs per weak
+# Get Number of complete jobs per weeks -> Fazer copia de dataset, tirar as colunas com status = 5
+datasetJobCompleted = dataset.copy()
+datasetJobCompleted = datasetJobCompleted[datasetJobCompleted['Status'] != 5]
+#print(datasetJobCompleted)
+wksCompleted = datasetJobCompleted['Finish Week']
+plt.hist(wksCompleted, bins = 53, align = 'mid',color = 'coral', rwidth=0.85, label = 'Weeks of the jobs completed')
+plt.xlabel('Weeks')
+plt.ylabel('Number of jobs completed')
+plt.legend()
+plt.show()
 
-# Get Number of complete jobs per weak
-
+'''
 # Number of processors per jobs
 
 plt.plot(dataset['Job Number'],dataset['Number of Allocated Processors'],label = "Number of allocated processors per job")
