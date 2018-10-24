@@ -147,7 +147,7 @@ print(len(datasetJobCompleted))
 print(len(dataset))
 '''
 
-vector_percentageSuc = [] 
+vector_percentageSuc = []
 for i in range(1,54):
 	jobTotais = len(dataset[dataset['Finish Week']==i])
 	#print(jobTotais)
@@ -169,16 +169,6 @@ plt.ylabel('Percentage of Jobs Completed')
 plt.title('Percentage of Successful Jobs Per Week')
 plt.legend()
 plt.grid(True)
-plt.show()
-
-
-
-# Number of processors per jobs
-plt.hist(dataset['Number of Allocated Processors'],bins = 128,label = "Number of allocated processors per job")
-plt.ylabel('Jobs')
-plt.xlabel('Allocated processors')
-plt.legend()
-plt.grid()
 plt.show()
 
 # Comparisation between requested processors and number of processors allocated
