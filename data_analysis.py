@@ -74,7 +74,7 @@ dataset.insert(18, 'Finish Week', lista_semanas)
 #print(dataset)
 
 
-
+'''
 # Get number of canceled jobs - 5 - and finished jobs - 1 -
 
 status = dataset['Status']
@@ -85,7 +85,7 @@ plt.legend()
 plt.show()
 
 
-'''
+
 # Get number of jobs per user
 
 # Get unique users -> set unordered colection of distinct objects
@@ -120,7 +120,7 @@ datasetJobCompleted = dataset.copy()
 datasetJobCompleted = datasetJobCompleted[datasetJobCompleted['Status'] != 5]
 #print(datasetJobCompleted)
 wksCompleted = datasetJobCompleted['Finish Week']
-plt.hist(wksCompleted, bins = 53, align = 'mid',color = 'coral', rwidth=0.85, label = 'Weeks of the jobs completed')
+plt.hist(wksCompleted, bins = 53, align = 'mid',color = 'coral', rwidth=0.85, label = 'Jobs completed per week')
 plt.xlabel('Weeks')
 plt.ylabel('Number of jobs completed')
 plt.title("Number of completed jobs per week")
@@ -130,7 +130,8 @@ plt.show()
 #Get the number of canceled jobs per week
 datasetCanceledJob = dataset.copy()
 datasetCanceledJob = datasetCanceledJob[datasetCanceledJob['Status'] != 1]
-plt.hist(wksCompleted, bins = 53, align = 'mid',color = 'coral', rwidth=0.85, label = 'Weeks of the jobs completed')
+wksCanceled= datasetCanceledJob['Finish Week']
+plt.hist(wksCanceled, bins = 53, align = 'mid',color = 'coral', rwidth=0.85, label = 'Jobs canceled per week')
 plt.xlabel('Weeks')
 plt.ylabel('Number of jobs completed')
 plt.title("Number of canceled jobs per week")
@@ -173,10 +174,9 @@ plt.show()
 
 
 # Number of processors per jobs
-
-plt.plot(dataset['Job Number'],dataset['Number of Allocated Processors'],label = "Number of allocated processors per job")
-plt.xlabel('Jobs')
-plt.ylabel('Allocated processors')
+plt.hist(dataset['Number of Allocated Processors'],bins = 128,label = "Number of allocated processors per job")
+plt.ylabel('Jobs')
+plt.xlabel('Allocated processors')
 plt.legend()
 plt.grid()
 plt.show()
